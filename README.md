@@ -5,7 +5,7 @@
 
 * `GET  /api/users`, Return all Users;
 * `POST /api/users`, Create a new User, requires name, email, password, password_confirmation;
-* `PUT /api/users/{userID}`, Update user, requires id, name, email, password, password_confirmation;
+* `PUT /api/users/{userID}`, Update user, requires id, email. Optional: name, password, password_confirmation;
 * `GET /api/users/{userID}`, Show specific user;
 * `DELETE /api/users/{userID}`, Delete specific user;
 ## You can test in http://restful.cluxnei.com/ endpoint. Like so
