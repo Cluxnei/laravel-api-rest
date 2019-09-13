@@ -12,6 +12,11 @@
 */
 
 
+// Default Login
+Route::get('/login', function(){
+    return 'Unauthenticated, check your emai to verify your account';
+})->name('login');
+
 // Restrinct route
 Route::get('/restrinct', function() {
     return 'Bem vindo ao sistema!';
