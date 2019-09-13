@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -40,6 +41,10 @@ class UserController extends Controller
 
         $user = User::create($validatedData);
 
+        Auth::login($user);
+        
+        $user->sendEmailVerificationNotification();
+        
         return response()->json($user, 201);
     }
 

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,10 +11,19 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
+// Restrinct route
+Route::get('/restrinct', function() {
+    return 'Bem vindo ao sistema!';
+})->name('restrinct')->middleware(['auth:api', 'verified']);
+
+
+// Verify user e-mail
+Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+// Resent user verification email
+Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
+// User Resource
 Route::namespace('Api')->group(function(){
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
 });

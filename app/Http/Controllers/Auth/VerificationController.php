@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Symfony\Component\HttpFoundation\Request;
 
 class VerificationController extends Controller
 {
@@ -21,11 +24,40 @@ class VerificationController extends Controller
     use VerifiesEmails;
 
     /**
-     * Where to redirect users after verification.
+     * Mark the authenticated user's email address as verified.
      *
-     * @var string
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    protected $redirectTo = '/home';
+    public function verify(Request $request)
+    {
+        $user = User::find($request->id);
+
+        if ($request->route('id') == $user->getKey() &&
+            $user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return response()->json('Email verified!');
+
+    }
+
+    /**
+     * Resend the email verification notification.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resend(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return response()->json('User already have verified email!', 422);
+        }
+
+        $request->user()->sendEmailVerificationNotification();
+
+        return response()->json('The notification has been resubmitted');
+    }
 
     /**
      * Create a new controller instance.
@@ -34,7 +66,7 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
