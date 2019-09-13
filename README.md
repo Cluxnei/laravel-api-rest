@@ -1,3 +1,33 @@
+## Laravel API Restful
+    Use Headers
+        'Accept' => 'application/json'
+    For All Requests
+
+* `GET  /api/users`, Return all Users;
+* `POST /api/users`, Create a new User, requires name, email, password, password_confirmation;
+* `PUT /api/users/{userID}`, Update user, requires id, name, email, password, password_confirmation;
+* `GET /api/users/{userID}`, Show specific user;
+* `DELETE /api/users/{userID}`, Delete specific user;
+## You can test in http://restful.cluxnei.com/ endpoint. Like so
+* `GET    http://restful.cluxnei.com/api/users`
+* `POST   http://restful.cluxnei.com/api/users`
+* `PUT    http://restful.cluxnei.com/api/users/{userID}`
+* `GET    http://restful.cluxnei.com/api/users/{userID}`
+* `DELETE http://restful.cluxnei.com/api/users/{userID}`
+
+<p>Example of user creation (I'm using POSTMAN):</p>
+<p align="center"><img src="http://restful.cluxnei.com/img/request.png" width="90%"></p>
+<p>When creating a user you will receive a confirmation email. There you will find an access token to access the restricted area.</p>
+<p>Email:</p>
+<p align="center"><img src="http://restful.cluxnei.com/img/email.png" width="90%"></p>
+
+## Access the Restrinct Area [GET] (http://restful.cluxnei.com/api/restrinct)
+    Use Headers
+        'Accept' => 'application/json',
+        'Authorization' => 'Bearer YOUR-ACCESS-TOKEN'
+
+
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
